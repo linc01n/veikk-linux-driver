@@ -73,6 +73,7 @@ static int veikk_s640_setup_and_register_input_devs(struct veikk *veikk) {
     __set_bit(BTN_TOUCH, pen_input->keybit);
     __set_bit(BTN_STYLUS, pen_input->keybit);
     __set_bit(BTN_STYLUS2, pen_input->keybit);
+    __set_bit(BTN_0, pen_input->keybit);
 
     input_set_abs_params(pen_input, veikk->x_map_axis, veikk->map_rect.x,
                          veikk->map_rect.x+veikk->map_rect.width, 0, 0);
@@ -122,6 +123,7 @@ static int veikk_s640_handle_raw_data(struct veikk *veikk, u8 *data, int size,
         input_report_key(pen_input, BTN_TOUCH, pen_report->buttons&0x1);
         input_report_key(pen_input, BTN_STYLUS, pen_report->buttons&0x2);
         input_report_key(pen_input, BTN_STYLUS2, pen_report->buttons&0x4);
+        input_report_key(pen_input, BTN_0, pen_report->x == 62 && !(pen_report->buttons & 0x01));
         break;
     default:
       hid_info(veikk->hdev, "Unknown input report with id %d\n", report_id);
