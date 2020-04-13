@@ -98,9 +98,10 @@ static int veikk_s640_handle_raw_data(struct veikk *veikk, u8 *data, int size,
 
     switch(report_id) {
     case VEIKK_PEN_REPORT:
+    case 2:
     case VEIKK_STYLUS_REPORT:
-        // validate size
-        if(size != sizeof(struct veikk_pen_report))
+      // validate size
+      if(size != sizeof(struct veikk_pen_report))
             return -EINVAL;
 
         // dispatch events with input_dev
@@ -123,7 +124,7 @@ static int veikk_s640_handle_raw_data(struct veikk *veikk, u8 *data, int size,
         input_report_key(pen_input, BTN_STYLUS2, pen_report->buttons&0x4);
         break;
     default:
-        hid_info(veikk->hdev, "Unknown input report with id %d\n", report_id);
+      hid_info(veikk->hdev, "Unknown input report with id %d\n", report_id);
         return 0;
     }
 
