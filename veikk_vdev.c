@@ -98,7 +98,7 @@ static int veikk_s640_handle_raw_data(struct veikk *veikk, u8 *data, int size,
 
     switch(report_id) {
     case VEIKK_PEN_REPORT:
-    case 2:
+    case 3:
     case VEIKK_STYLUS_REPORT:
       // validate size
       if(size != sizeof(struct veikk_pen_report))
